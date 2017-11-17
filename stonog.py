@@ -22,7 +22,14 @@ def main():
     print 'Row:     ', memory
 
     links = open('linki_stonoga.txt','r')
-    id = 1
+
+    #getting id of last record in the table
+    id_query = "SELECT id FROM views ORDER BY id DESC LIMIT 1;"
+    cursor.execute(id_query)
+    id = cursor.fetchall()
+    id = id[0][0]
+
+
     for line in links:
 
         #getting number of views
@@ -36,9 +43,12 @@ def main():
         name = soup.find(name = 'title')
         title = soup.title.string
         print title,': ',int_count
+
         query = "INSERT INTO views VALUES (%s,%s,%s);"
-        data = (id, title, int_count)
+
+        #increment id before adding it to the table
         id += 1
+        data = (id, title, int_count)
         cursor.execute (query,data)
         conn.commit()
         #cursor.execute ("""INSERT INTO views VALUES (%s,%s,%s);""",(DEFAULT, title, int_count))
