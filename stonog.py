@@ -10,7 +10,7 @@ class Example:
     def rzopa(self):
         print (self.dupa)
 
-class StonogDB(object):
+class StonogDB:
 
     #try to connect
     def main():
@@ -61,6 +61,6 @@ class StonogDB(object):
             conn.commit()
             #cursor.execute ("""INSERT INTO views VALUES (%s,%s,%s);""",(DEFAULT, title, int_count))
         print ('dupa')
-        
+
     if __name__ == "__main__":
         main()
