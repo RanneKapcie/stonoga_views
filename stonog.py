@@ -3,6 +3,8 @@ import urllib
 import psycopg2
 import psycopg2.extras
 
+links = open('linki_stonoga.txt','r')
+
 class Example:
     def __init__(self, dupa):
         self.dupa = 'Dupa'
@@ -15,9 +17,13 @@ class StonogDB:
     #try to connect
     def main():
         conn_string = "dbname='stonoga' user='postgres' password=''"
-
         print "Connecting to database\n -> %s " %(conn_string)
+
+        global conn
         conn = psycopg2.connect(conn_string)
+
+        #setting variable to global
+        global cursor
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         work_mem = 2048
@@ -29,9 +35,10 @@ class StonogDB:
         print 'Value: ',memory[0]
         print 'Row:     ', memory
 
-        links = open('linki_stonoga.txt','r')
-
         #getting id of last record in the table
+
+    def insert_rows():
+
         id_query = "SELECT id FROM views ORDER BY id DESC LIMIT 1;"
         cursor.execute(id_query)
         id = cursor.fetchall()
@@ -58,9 +65,10 @@ class StonogDB:
             id += 1
             data = (id, title, int_count)
             cursor.execute (query,data)
-            conn.commit()
+            #conn.commit()
             #cursor.execute ("""INSERT INTO views VALUES (%s,%s,%s);""",(DEFAULT, title, int_count))
-        print ('dupa')
+
 
     if __name__ == "__main__":
         main()
+        insert_rows()
