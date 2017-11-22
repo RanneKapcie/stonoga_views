@@ -7,12 +7,12 @@ import stonog
 
 class MakePlot():
 
-    list_of_titles = []
+    Ston_class = stonog.StonogDB()
 
     def __init__(self,list_of_titles):
         self.list_of_titles = list_of_titles
 
-    def create_list_of_titles():
+    def create_list_of_titles(self):
 
         id = 1
         boolean = True
@@ -31,9 +31,15 @@ class MakePlot():
                 list_of_titles.append(title)
                 id += 1
 
-    def select_views():
+    def select_views(self):
 
-        create_list_of_titles()
+        self.create_list_of_titles()
 
         for title in list_of_titles:
-            views_query[] = "SELECT views FROM views WHERE name = (%s)" % (title)
+            views_query = "SELECT views FROM views WHERE name = (%s)" % (title)
+            cursor.execute(views_query)
+            views = cursor.fetchall()
+            print (views)
+
+    if __name__ == "__main__":
+        select_views()
