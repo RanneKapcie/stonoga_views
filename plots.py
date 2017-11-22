@@ -12,13 +12,12 @@ class MakePlot():
     def __init__(self,list_of_titles):
         self.list_of_titles = list_of_titles
 
-    def connect():
-        stonog.StonogDB.main()
-
     def create_list_of_titles():
 
         id = 1
         boolean = True
+
+        #adding every title name to the list
         while boolean == True:
 
             title_query = "SELECT name FROM views WHERE id = (%s)" % (id)
@@ -38,4 +37,3 @@ class MakePlot():
 
         for title in list_of_titles:
             views_query[] = "SELECT views FROM views WHERE name = (%s)" % (title)
-            

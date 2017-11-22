@@ -5,5 +5,5 @@ obiekt.rzopa()
 
 DB_class = stonog.StonogDB()
 
-DB_class.main()
+DB_class.connect()
 DB_class.insert_rows()

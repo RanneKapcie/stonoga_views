@@ -15,7 +15,7 @@ class Example:
 class StonogDB:
 
     #try to connect
-    def main(self):
+    def connect(self):
         conn_string = "dbname='stonoga' user='postgres' password=''"
         print "Connecting to database\n -> %s " %(conn_string)
 
@@ -70,5 +70,5 @@ class StonogDB:
 
 
     if __name__ == "__main__":
-        main()
-        insert_rows()
+        connect()
+        #insert_rows()
