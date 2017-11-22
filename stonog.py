@@ -7,7 +7,7 @@ links = open('linki_stonoga.txt','r')
 
 class Example:
     def __init__(self, dupa):
-        self.dupa = 'Dupa'
+        self.dupa = dupa
 
     def rzopa(self):
         print (self.dupa)
@@ -15,7 +15,7 @@ class Example:
 class StonogDB:
 
     #try to connect
-    def main():
+    def main(self):
         conn_string = "dbname='stonoga' user='postgres' password=''"
         print "Connecting to database\n -> %s " %(conn_string)
 
@@ -37,7 +37,7 @@ class StonogDB:
 
         #getting id of last record in the table
 
-    def insert_rows():
+    def insert_rows(self):
 
         id_query = "SELECT id FROM views ORDER BY id DESC LIMIT 1;"
         cursor.execute(id_query)
@@ -65,7 +65,7 @@ class StonogDB:
             id += 1
             data = (id, title, int_count)
             cursor.execute (query,data)
-            #conn.commit()
+            conn.commit()
             #cursor.execute ("""INSERT INTO views VALUES (%s,%s,%s);""",(DEFAULT, title, int_count))
 
 
