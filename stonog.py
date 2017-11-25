@@ -70,10 +70,17 @@ class StonogDB:
 
 class MakePlot():
 
-    def __init__(self,list_of_titles):
-        self.list_of_titles = list_of_titles
+    def __init__(self,list_of_titles, dict_titles_views):
 
-    def create_list_of_titles(self):
+        self.list_of_titles = list_of_titles
+        self.dict_titles_views = dict_titles_views
+
+    #queries the database and returns a list of titles in a database
+    def create_list_of_titles(self, list_of_titles):
+
+        self.list_of_titles = list_of_titles
+        StonogDB_class = StonogDB()
+        StonogDB_class.connect()
 
         id = 1
         boolean = True
@@ -91,16 +98,15 @@ class MakePlot():
             else:
                 list_of_titles.append(title)
                 id += 1
+        return list_of_titles
 
-    def select_views(self):
+    def select_views(self, list_of_titles, dict_titles_views):
 
-        self.create_list_of_titles()
-
-        for title in list_of_titles:
-            views_query = "SELECT views FROM views WHERE name = (%s)" % (title)
-            cursor.execute(views_query)
-            views = cursor.fetchall()
-            print (views)
+        #do wyjebania
+        select_query = "SELECT views FROM views WHERE name = (%s)", [title for title in list_of_titles]
+        cursor.executemany(select_query,list_of_titles)
+        dict_titles_views = cursor.fetchall()
+        print (dict_titles_views)
 
 #    if __name__ == "__main__":
 #        connect()

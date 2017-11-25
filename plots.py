@@ -33,7 +33,7 @@ class MakePlot():
 
     def select_views(self):
 
-        self.create_list_of_titles()
+        self.create_list_of_titles(list_of_titles)
 
         for title in list_of_titles:
             views_query = "SELECT views FROM views WHERE name = (%s)" % (title)
