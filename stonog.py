@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import urllib
 import psycopg2
 import psycopg2.extras
+from datetime import datetime
 
 links = open('linki_stonoga.txt','r')
 
@@ -39,14 +40,15 @@ class StonogDB:
 
     def insert_rows(self):
 
-        id_query = "SELECT id FROM views ORDER BY id DESC LIMIT 1;"
-        cursor.execute(id_query)
-        id = cursor.fetchall()
-        id = id[0][0]
+        #id_query = "SELECT id FROM views ORDER BY id DESC LIMIT 1;"
+        #cursor.execute(id_query)
+        #id = cursor.fetchone()
+        #id = id[0][0]
 
 
         for line in links:
 
+            dt = datetime.now()
             #getting number of views
             url = line
             html = urllib.urlopen(url)
@@ -59,11 +61,9 @@ class StonogDB:
             title = soup.title.string
             print title,': ',int_count
 
-            query = "INSERT INTO views VALUES (%s,%s,%s);"
+            query = "INSERT INTO views2 (title,views_num,time) VALUES (%s,%s,%s);"
 
-            #increment id before adding it to the table
-            id += 1
-            data = (id, title, int_count)
+            data = (title, int_count, dt)
             cursor.execute (query,data)
             conn.commit()
             #cursor.execute ("""INSERT INTO views VALUES (%s,%s,%s);""",(DEFAULT, title, int_count))
@@ -102,11 +102,17 @@ class MakePlot():
 
     def select_views(self, list_of_titles, dict_titles_views):
 
-        #do wyjebania
-        select_query = "SELECT views FROM views WHERE name = (%s)", [title for title in list_of_titles]
-        cursor.executemany(select_query,list_of_titles)
-        dict_titles_views = cursor.fetchall()
-        print (dict_titles_views)
+        #for title in list_of_titles:
+        list5 = [1,2,9,10]
+        select_views = "SELECT views FROM views WHERE name = %s AND id = (%s)"
+        cursor.execute(select_views,(list_of_titles,list5))
+        views = cursor.fetchall()
+                #views = views[0][0]
+                #dict_titles_views.append(views)
+        for view in views:
+            print view
+        print views
+
 
 #    if __name__ == "__main__":
 #        connect()

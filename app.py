@@ -30,7 +30,7 @@ elif user_input == 2:
 elif user_input == 3:
     print ('This function is not yet ready.')
 else:
-    list = []
+    list1 = []
     list2 = []
-    MakePlot_class.create_list_of_titles(list)
-    MakePlot_class.select_views(list, list2)
+    MakePlot_class.create_list_of_titles(list1)
+    MakePlot_class.select_views(list1, list2)

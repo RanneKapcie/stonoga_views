@@ -5,41 +5,29 @@ import psycopg2.extras
 import stonog
 
 
-class MakePlot():
+duuupa = stonog.StonogDB()
 
-    Ston_class = stonog.StonogDB()
+conn_string = "dbname='stonoga' user='postgres' password=''"
+print "Connecting to database\n -> %s " %(conn_string)
 
-    def __init__(self,list_of_titles):
-        self.list_of_titles = list_of_titles
+global conn
+conn = psycopg2.connect(conn_string)
 
-    def create_list_of_titles(self):
+#setting variable to global
+global cursor
+cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-        id = 1
-        boolean = True
+work_mem = 2048
 
-        #adding every title name to the list
-        while boolean == True:
+cursor.execute('SET work_mem TO %s', (work_mem,))
+cursor.execute('SHOW work_mem')
 
-            title_query = "SELECT name FROM views WHERE id = (%s)" % (id)
-            cursor.execute(title_query)
-            title = cursor.fetchall()
-            title = title[0][0]
+memory = cursor.fetchone()
+print 'Value: ',memory[0]
+print 'Row:     ', memory
 
-            if title in list_of_titles:
-                boolean = False
-            else:
-                list_of_titles.append(title)
-                id += 1
-
-    def select_views(self):
-
-        self.create_list_of_titles(list_of_titles)
-
-        for title in list_of_titles:
-            views_query = "SELECT views FROM views WHERE name = (%s)" % (title)
-            cursor.execute(views_query)
-            views = cursor.fetchall()
-            print (views)
-
-    if __name__ == "__main__":
-        select_views()
+values_list = []
+select_views = "SELECT views FROM views WHERE name = (%s)", "Zbigniew Stonoga - Scatman REMIX - YouTube"
+cursor.executemany(select_views,values_list)
+values_list = cursor.fetchall()
+print (values_list)
