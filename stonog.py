@@ -45,7 +45,6 @@ class StonogDB:
         #id = cursor.fetchone()
         #id = id[0][0]
 
-
         for line in links:
 
             dt = datetime.now()
@@ -82,14 +81,18 @@ class MakePlot():
         StonogDB_class = StonogDB()
         StonogDB_class.connect()
 
-        id = 1
+        id_query = "SELECT id FROM views2 ORDER BY id LIMIT 1;"
+        cursor.execute(id_query)
+        id = cursor.fetchall()
+        id = id[0][0]
+
         boolean = True
 
         #adding every title name to the list
         while boolean == True:
 
-            title_query = "SELECT name FROM views WHERE id = (%s)" % (id)
-            cursor.execute(title_query)
+            title_query = "SELECT title FROM views2 WHERE id = (%s)"
+            cursor.execute(title_query, [id])
             title = cursor.fetchall()
             title = title[0][0]
 
@@ -102,16 +105,16 @@ class MakePlot():
 
     def select_views(self, list_of_titles, dict_titles_views):
 
-        #for title in list_of_titles:
-        list5 = [1,2,9,10]
-        select_views = "SELECT views FROM views WHERE name = %s AND id = (%s)"
-        cursor.execute(select_views,(list_of_titles,list5))
-        views = cursor.fetchall()
-                #views = views[0][0]
-                #dict_titles_views.append(views)
-        for view in views:
-            print view
-        print views
+        for title in list_of_titles:
+            title = str(title)
+            select_views = "SELECT views_num FROM views2 WHERE title = (%s); "
+            cursor.execute(select_views,(title,))
+            views = cursor.fetchall()
+                    #views = views[0][0]
+                    #dict_titles_views.append(views)
+            for view in views:
+                print view
+            print views
 
 
 #    if __name__ == "__main__":
