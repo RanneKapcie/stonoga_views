@@ -69,7 +69,7 @@ class StonogDB:
 
 class MakePlot():
 
-    def __init__(self,list_of_titles, dict_titles_views):
+    def __init__(self, list_of_titles, dict_titles_views):
 
         self.list_of_titles = list_of_titles
         self.dict_titles_views = dict_titles_views
@@ -103,20 +103,21 @@ class MakePlot():
                 id += 1
         return list_of_titles
 
-    def select_views(self, list_of_titles, dict_titles_views):
+    def select_views(self, list_of_titles, list_titles_views):
 
+        #creating list of lists
+        list_of_views = list()
+
+        i = 0
         for title in list_of_titles:
+
             title = str(title)
+
+            #fetching numbers of views from every title that is in list_of_titles
             select_views = "SELECT views_num FROM views2 WHERE title = (%s); "
             cursor.execute(select_views,(title,))
             views = cursor.fetchall()
-                    #views = views[0][0]
-                    #dict_titles_views.append(views)
             for view in views:
-                print view
-            print views
-
-
-#    if __name__ == "__main__":
-#        connect()
-#        insert_rows()
+                list_of_views.append(view)
+            i += 1
+        print list_of_views
