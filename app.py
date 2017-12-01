@@ -3,7 +3,10 @@ import stonog
 #obiekt = stonog.Example('dupa')
 #obiekt.rzopa()
 DB_class = stonog.StonogDB()
-MakePlot_class = stonog.MakePlot(list, list)
+MakePlot_class = stonog.MakePlot(list, list, list)
+list1 = []
+list2 = []
+list3 = []
 
 print ('Choose what you want to do:\n 1. Check if connection works\n 2. Connect and insert rows with info from yt\n' +
 ' 3. Make a plot')
@@ -30,7 +33,4 @@ elif user_input == 2:
 elif user_input == 3:
     print ('This function is not yet ready.')
 else:
-    list1 = []
-    list2 = []
-    MakePlot_class.create_list_of_titles(list1)
-    MakePlot_class.select_views(list1, list2)
+    MakePlot_class.create_plot(list1, list2, list3)
