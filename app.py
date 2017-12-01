@@ -31,6 +31,8 @@ elif user_input == 2:
     DB_class.insert_rows()
 
 elif user_input == 3:
-    print ('This function is not yet ready.')
+    list_of_titles = MakePlot_class.create_list_of_titles(list1)
+    MakePlot_class.create_plot(list_of_titles, list2, list3)
+
 else:
-    MakePlot_class.create_plot(list1, list2, list3)
+    print 'No function'
