@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import urllib
 import psycopg2
 import psycopg2.extras
+import numpy as np
+import matplotlib.pyplot as plt
 from datetime import datetime
 
 links = open('linki_stonoga.txt','r')
@@ -69,10 +71,11 @@ class StonogDB:
 
 class MakePlot():
 
-    def __init__(self, list_of_titles, dict_titles_views):
+    def __init__(self, list_of_titles, list_of_views, list_of_timestamps):
 
         self.list_of_titles = list_of_titles
-        self.dict_titles_views = dict_titles_views
+        self.list_of_views = list_of_views
+        self.list_of_timestamps = list_of_timestamps
 
     #queries the database and returns a list of titles in a database
     def create_list_of_titles(self, list_of_titles):
@@ -103,10 +106,9 @@ class MakePlot():
                 id += 1
         return list_of_titles
 
-    def select_views(self, list_of_titles, list_titles_views):
+    def select_views(self, list_of_titles, list_of_views, list_of_timestamps):
 
-        #creating list of lists
-        list_of_views = list()
+        self.create_list_of_titles(list_of_titles)
 
         i = 0
         for title in list_of_titles:
@@ -114,10 +116,22 @@ class MakePlot():
             title = str(title)
 
             #fetching numbers of views from every title that is in list_of_titles
-            select_views = "SELECT views_num FROM views2 WHERE title = (%s); "
+            select_views = "SELECT views_num, time FROM views2 WHERE title = (%s); "
             cursor.execute(select_views,(title,))
             views = cursor.fetchall()
+
             for view in views:
-                list_of_views.append(view)
+                list_of_views.append(view[0])
+                list_of_timestamps.append(view[1])
+
             i += 1
-        print list_of_views
+
+    def create_plot(self, list_of_titles, list_of_views, list_of_timestamps):
+
+        self.select_views(list_of_titles, list_of_views, list_of_timestamps)
+        print len(list_of_timestamps), len(list_of_views)
+        list_of_timestamps = np.array(list_of_timestamps)
+        list_of_views = np.array(list_of_views)
+
+        plt.plot(list_of_timestamps,list_of_views)
+        plt.show()
