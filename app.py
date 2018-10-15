@@ -1,7 +1,5 @@
 import stonog
 
-#obiekt = stonog.Example('dupa')
-#obiekt.rzopa()
 DB_class = stonog.StonogDB()
 MakePlot_class = stonog.MakePlot(list, list, list)
 list1 = []
@@ -21,7 +19,6 @@ except ValueError:
 
 if user_input == 1:
     DB_class.connect()
-    print ('sraka')
 
 elif user_input == 2:
     try:

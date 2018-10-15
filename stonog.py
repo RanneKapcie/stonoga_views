@@ -8,13 +8,6 @@ from datetime import datetime
 
 links = open('linki_stonoga.txt','r')
 
-class Example:
-    def __init__(self, dupa):
-        self.dupa = dupa
-
-    def rzopa(self):
-        print (self.dupa)
-
 class StonogDB:
 
     #try to connect
@@ -42,11 +35,6 @@ class StonogDB:
 
     def insert_rows(self):
 
-        #id_query = "SELECT id FROM views ORDER BY id DESC LIMIT 1;"
-        #cursor.execute(id_query)
-        #id = cursor.fetchone()
-        #id = id[0][0]
-
         for line in links:
 
             dt = datetime.now()
@@ -54,8 +42,8 @@ class StonogDB:
             url = line
             html = urllib.urlopen(url)
             soup = BeautifulSoup(html,'lxml')
-            tag = soup.find(itemprop = 'interactionCount')
-            int_count = tag.get('content')
+            c_tag = soup.find(itemprop = 'interactionCount')
+            int_count = c_tag.get('content')
 
             #finding title of video
             name = soup.find(name = 'title')
